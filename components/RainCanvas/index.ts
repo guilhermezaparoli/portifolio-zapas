@@ -1,9 +1,11 @@
-'use client'
+'use client';
+import { useGlobalContext } from '@/context/GlobalContext';
 import { useEffect, useState } from 'react';
 
 const RainCanvas = () => {
-  const [isDay, setIsDay] = useState(true);
+  const { isLightTheme } = useGlobalContext();
   const [transitionProgress, setTransitionProgress] = useState(0);
+  const [clouds, setClouds] = useState<Array<{ x: number; y: number; width: number; height: number; speed: number }>>([]);
 
   useEffect(() => {
     const div = document.createElement('div');
@@ -65,9 +67,9 @@ const RainCanvas = () => {
       lightningTimer = lightningTimer < 0.0 ? 8000.0 : lightningTimer - 30.0;
 
       // Calculate transition progress
-      if (isDay && transitionProgress < 1) {
+      if (isLightTheme && transitionProgress < 1) {
         setTransitionProgress(prev => prev + 0.01);
-      } else if (!isDay && transitionProgress > 0) {
+      } else if (!isLightTheme && transitionProgress > 0) {
         setTransitionProgress(prev => prev - 0.01);
       }
 
@@ -210,7 +212,6 @@ const RainCanvas = () => {
       ctx.fill();
     };
 
-
     const blendColors = (color1: string, color2: string, percentage: number) => {
       const c1 = parseInt(color1.slice(1), 16);
       const c2 = parseInt(color2.slice(1), 16);
@@ -236,22 +237,9 @@ const RainCanvas = () => {
       cancelAnimationFrame(animationFrameId);
       document.body.removeChild(div);
     };
-  }, [isDay, transitionProgress]);
+  }, [isLightTheme, transitionProgress]);
 
-  // return (
-  //   <button
-  //     style={{
-  //       position: 'fixed',
-  //       top: '10px',
-  //       right: '10px',
-  //       padding: '10px 20px',
-  //       zIndex: 1,
-  //     }}
-  //     onClick={() => setIsDay(!isDay)}
-  //   >
-  //     {isDay ? 'Switch to Night' : 'Switch to Day'}
-  //   </button>
-  // );
+  return null;
 };
 
 export default RainCanvas;

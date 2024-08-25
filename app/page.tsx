@@ -1,10 +1,17 @@
-import RainCanvas from "@/components/RainCanvas";
-import Image from "next/image";
+import RainCanvas from "@/components/RainCanvas"
+import Teste from "@/components/teste"
 
-export default function Home() {
+const Page = async () => {
+
+
   return (
-    <div>
-      <RainCanvas />
-    </div>
-  );
+    <>
+   <RainCanvas/>
+   <Teste/>
+  
+    </>
+  )
 }
+
+export default Page
+ 
